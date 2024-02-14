@@ -1,12 +1,15 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { auth } from '../config/firebase';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
+    const navigate =useNavigate();
     const [user] = useAuthState(auth);
     const signuserOut = async () => {
-        await signOut(auth);
+      navigate('/login');
+      await signOut(auth);
+        
     }
   return (
     <header>

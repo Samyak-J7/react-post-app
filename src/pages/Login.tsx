@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom"
 const Login = () => {
 const navigate = useNavigate();
     const signInWithGoogle = async () => {
+      try{
        const result = await signInWithPopup(auth,provider);
-       navigate('/');
+       navigate('/');}
+       catch{}
     }
   return (
     <div>

@@ -1,29 +1,36 @@
 import {getDocs,collection} from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { auth, db } from '../../config/firebase'
 import { useEffect, useState } from 'react';
 import Posts from './post';
+import { useAuthState } from 'react-firebase-hooks/auth';
 export interface Post{
   id:string;
   title:string;
-  userid:string;
+  userId:string;
   description:string;
   username:string
 
 }
 const Main = () => {
+  const [user] = useAuthState(auth);
   const [postsList, setPostList] = useState <Post[] | null> (null);
   const postRef = collection(db , 'posts');
   const getPosts = async () => {
+    try{
     const data = await getDocs(postRef);
-    setPostList(data.docs.map( (doc) => ({...doc.data(), id: doc.id})) as Post[]);  
+    setPostList(data.docs.map( (doc) => ({...doc.data(), id: doc.id})) as Post[]); }
+    catch{}
   }
   useEffect(() => {
-    getPosts();
-
-  }, []);
+    try{getPosts();}
+    catch{
+      console.log("error")
+    }
+    
+  })
   return (
     <div>
-        {postsList?.map((post) =>( <Posts post={post} /> ))}
+        {user && postsList?.map((post) =>( <Posts post={post} /> ))}
     </div>
   )
 }

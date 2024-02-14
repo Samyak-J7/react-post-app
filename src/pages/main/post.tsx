@@ -15,10 +15,13 @@ const Posts = (props: Props) => {
     const [Likes,setLikes] = useState<Like[] | null >(null);
     const { post } = props;    
     const likesRef = collection(db,'likes');
+    const PostsRef = collection(db,'posts');
     const likesDoc = query(likesRef,where("postId",'==',post.id))
     const getLikes = async() => {
+        try{
         const data = await getDocs(likesDoc);
-        setLikes(data.docs.map( (doc) => ({userId : doc.data().userId,likeId:doc.id}))) 
+        setLikes(data.docs.map( (doc) => ({userId : doc.data().userId,likeId:doc.id}))) }
+        catch{}
        
     }
     const [user] = useAuthState(auth);
@@ -27,31 +30,44 @@ const Posts = (props: Props) => {
     const newdoc = await addDoc(likesRef, {userId: user?.uid ,postId:post.id });
     if (user){
     setLikes((prev) => prev ?[...prev,{userId: user?.uid, likeId: newdoc.id}  ]:[{userId: user?.uid,likeId: newdoc.id}] );
-    }
-}
-catch{}
-
-}
-const remLike = async () => {
-    try{
-        const liketodelquery = query(likesRef,where("postId",'==',post.id),where("userId",'==',user?.uid));
-        const liketodeletedata = await getDocs(liketodelquery);
-        const liketodel = doc(db,"likes",liketodeletedata.docs[0].id);
-        const likeid = liketodeletedata.docs[0].id;
-        await deleteDoc(liketodel);
-        if (user){
-            setLikes((prev) => prev && prev.filter((like) => like.likeId !== likeid));
+            }
         }
-    }
     catch{}
 
     }
-const hasLiked = Likes?.find((like) =>like.userId === user?.uid);
+    const remLike = async () => {
+        try{
+            const liketodelquery = query(likesRef,where("postId",'==',post.id),where("userId",'==',user?.uid));
+            const liketodeletedata = await getDocs(liketodelquery);
+            const liketodel = doc(db,"likes",liketodeletedata.docs[0].id);
+            const likeid = liketodeletedata.docs[0].id;
+            await deleteDoc(liketodel);
+            if (user){
+                setLikes((prev) => prev && prev.filter((like) => like.likeId !== likeid));
+            }
+        }
+        catch{}
+    }
+    const hasLiked = Likes?.find((like) =>like.userId === user?.uid);
+    const isMyPost =  post.userId===user?.uid ?true: false;
+     const delPost = async () => {
+        let delpostid:any =''
+        const Posttodelquery = query(PostsRef,where("userId",'==',post.userId),where("userId",'==',user?.uid));
+        const posttodeldata = await getDocs(Posttodelquery);
+        posttodeldata.forEach((datapost) => {
+           if(datapost.id === post.id){
+             delpostid = doc(db,"posts",datapost.id);    
+           }
+       })
+       await deleteDoc(delpostid); 
+       setShow(!show);
 
-useEffect(() => {
-    getLikes();
-    
-},[])
+    }
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        try{getLikes();}
+        catch{}   
+    },[])
   return (
     <div>
         <h1>{post.title}</h1>
@@ -60,8 +76,9 @@ useEffect(() => {
         <button onClick={hasLiked ? remLike:addLike}> 
         {hasLiked ? <>&#x1F44E;</>:<>&#128077;</>} </button>
         <p>Likes:{Likes?.length }</p>
+        {isMyPost && <button onClick={() => setShow(!show)}>  Delete Post</button>}
+        {show ? <button onClick={delPost}>Confirm Delete</button> : null}
     </div>
   )
 }
-
 export default Posts
