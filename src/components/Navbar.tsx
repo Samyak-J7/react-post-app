@@ -3,7 +3,6 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 import { signOut } from 'firebase/auth';
 import { signInWithPopup } from "firebase/auth"
 import { auth , provider } from "../config/firebase"
-
 const Navbar = () => {
     const navigate =useNavigate();
     const [user] = useAuthState(auth);
