@@ -9,6 +9,7 @@ export interface Post{
   userId:string;
   description:string;
   username:string
+  userEmail:string;
 
 }
 const Main = () => {
@@ -29,8 +30,9 @@ const Main = () => {
     
   })
   return (
-    <div>
-        {user && postsList?.map((post) =>( <Posts post={post} /> ))}
+    <div className='main'>
+
+        {user ? postsList?.map((post) =>( <Posts post={post} /> )):<><h1 className='msg'>Please Sign In using Google Account.</h1></>}
     </div>
   )
 }

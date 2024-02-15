@@ -1,26 +1,34 @@
 import {Link, useNavigate} from 'react-router-dom';
-import { auth } from '../config/firebase';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { signOut } from 'firebase/auth';
+import { signInWithPopup } from "firebase/auth"
+import { auth , provider } from "../config/firebase"
 
 const Navbar = () => {
     const navigate =useNavigate();
     const [user] = useAuthState(auth);
     const signuserOut = async () => {
-      navigate('/login');
+      navigate('/');
       await signOut(auth);
         
+    }
+    const signInWithGoogle = async () => {
+      try{
+       const result = await signInWithPopup(auth,provider);
+       navigate('/');}
+       catch{
+       }
     }
   return (
     <header>
         <nav>
-        <Link to='/'>Home</Link>
-        {!user  ? <Link to='/login'>Login</Link>: <Link to='/createpost'>Create Post </Link> }        
+        <Link className='link' to='/'>Home</Link>
+        {!user  ?  <button className='signin' onClick={signInWithGoogle}>Sign in</button>: <Link className='link' to='/createpost'>Create Post </Link> }        
         {user && (
             <>
-            <p>{user?.displayName}</p>
-            <img src={user?.photoURL || ""} width='10'height='10'/>
-            <button onClick={signuserOut}>Log Out</button>
+            <p >{user?.displayName}</p>
+            <img className='pfp' src={user?.photoURL || ""} width='20'height='20'/>
+            <button className='logout' onClick={signuserOut}>Log Out</button>
             </>
         )}
         

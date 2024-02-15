@@ -25,15 +25,17 @@ const onCreatePost = async (data:CreateFormData) => {
     await addDoc(postsRef,{
         ...data,
         username: user?.displayName,
-        userId: user?.uid        
+        userId: user?.uid,
     })
     navigate('/')
 }
   return (
-   <form onSubmit={handleSubmit(onCreatePost)}>
-        <input placeholder="Title" {...register("title")} />{errors.title?.message}
-        <textarea placeholder="Description" {...register("description")} />{errors.description?.message}
-        <input type="submit" />
+   
+   <form className="post-form" onSubmit={handleSubmit(onCreatePost)}>
+         <h1>Post Details</h1>
+        <input className="title" placeholder="Title" {...register("title")} />{errors.title?.message}
+        <textarea className="desc" rows={10} cols={30} placeholder="Description" {...register("description")} />{errors.description?.message}
+        <input className="subm" type="submit" value="Post"/>
    </form>
   )
 }

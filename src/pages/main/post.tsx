@@ -60,24 +60,25 @@ const Posts = (props: Props) => {
            }
        })
        await deleteDoc(delpostid); 
-       setShow(!show);
 
     }
-    const [show, setShow] = useState(false);
+    
     useEffect(() => {
         try{getLikes();}
         catch{}   
     },[])
   return (
-    <div>
+    <div className="post">
         <h1>{post.title}</h1>
-        <h3>{post.description}</h3>
-        <h4>{post.username}</h4>
-        <button onClick={hasLiked ? remLike:addLike}> 
-        {hasLiked ? <>&#x1F44E;</>:<>&#128077;</>} </button>
-        <p>Likes:{Likes?.length }</p>
-        {isMyPost && <button onClick={() => setShow(!show)}>  Delete Post</button>}
-        {show ? <button onClick={delPost}>Confirm Delete</button> : null}
+        <h4>@{post.username}</h4>
+        <p>{post.description}</p>
+        <div className="bottom">
+            <div className="like-section">
+            <button className="heart"  style={{ color: hasLiked && 'red' }} onClick={hasLiked ? remLike:addLike}>&#10084; </button>
+            <span style={{ color: hasLiked && 'red'  }} >{Likes && Likes?.length > 0 ? Likes?.length:"" }</span>
+            </div>       
+        {isMyPost && <button className="delpost" onClick={delPost}><i className="fa fa-trash" aria-hidden="true"></i>  Delete</button>}
+        </div>
     </div>
   )
 }

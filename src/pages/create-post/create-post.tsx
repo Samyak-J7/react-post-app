@@ -1,7 +1,7 @@
 import Form from "./form"
 const CreatePost = () => {
   return (
-    <div>
+    <div className="cp">
       <Form/>
     </div>
   )

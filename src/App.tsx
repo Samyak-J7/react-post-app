@@ -1,7 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router , Route , Routes } from "react-router-dom";
 import Main from './pages/main/Main';
-import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import CreatePost from './pages/create-post/create-post';
 function App() {
@@ -11,7 +10,6 @@ function App() {
       <Navbar/>
       <Routes>
           <Route path='/' element={<Main/>} />
-          <Route path='/login' element={<Login/>} />
           <Route path='/createpost' element={<CreatePost/>} />
       </Routes>
     </Router>
