@@ -13,6 +13,7 @@ export interface Post{
 
 }
 const Main = () => {
+  const [refreshPosts, setRefreshPosts] = useState(false);
   const [user] = useAuthState(auth);
   const [postsList, setPostList] = useState <Post[] | null> (null);
   const postRef = collection(db , 'posts');
@@ -26,12 +27,12 @@ const Main = () => {
     try{getPosts();}
     catch{}
     
-  },[user])
+  },[user,refreshPosts])
 
   return (
     <div className='main'>
          
-        {user ? postsList?.map((post) =>( <Posts post={post} /> )):<></>}
+        {user ? postsList?.map((post) =>( <Posts post={post} refresh ={refreshPosts} fun={setRefreshPosts} /> )):<></>}
     </div>
   )
 }

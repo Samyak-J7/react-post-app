@@ -1,10 +1,13 @@
 import { addDoc, collection, query, where,getDocs,deleteDoc, doc } from "firebase/firestore";
-import { Post } from "./Main"
+import Main, { Post } from "./Main"
 import { auth, db } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 interface Props{
     post : Post
+    refresh: boolean
+    fun: any
 }
 interface Like{
     likeId: string;
@@ -60,7 +63,9 @@ const Posts = (props: Props) => {
              delpostid = doc(db,"posts",datapost.id);    
            }
        })
-       await deleteDoc(delpostid); }
+       await deleteDoc(delpostid);
+       props.fun(!props.refresh);
+         }
        catch{}
 
     }
