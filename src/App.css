@@ -11,6 +11,27 @@ nav{
   color: white;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  font-size: 1rem;
+}
+.link{
+  padding-left: 1rem;
+  color: #747dd0;
+  text-decoration: none;  
+}
+.profile{
+  display: flex;
+  align-items: center;
+  gap:0.2rem
+}
+.logout{
+  background-color: transparent;
+  border: none;
+  color: #f4212e;
+  cursor: pointer;
+  padding-right: 1rem;
+}
+.pfp{
+  border-radius: 50%;
 }
 body{
   background-color: rgba(0, 0, 0, 0.953);
@@ -138,20 +159,7 @@ padding: 0.5rem;
   background-color: rgb(36, 36, 36);
   border: 1px solid white;
 }
-.link{
-  color: #747dd0;
-  text-decoration: none;  
-}
 
-.logout{
-  background-color: transparent;
-  border: none;
-  color: #f4212e;
-  cursor: pointer;
-}
-.pfp{
-  border-radius: 50%;
-}
 .delpost:hover{
 cursor: pointer;
 background-color: rgba(81, 81, 81, 0.211);

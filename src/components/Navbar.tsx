@@ -25,8 +25,9 @@ const Navbar = () => {
         {!user  ?  <button className='signin' onClick={signInWithGoogle}>Sign in</button>: <Link className='link' to='/createpost'>Create Post </Link> }        
         {user && (
             <>
-            <p >{user?.displayName}</p>
-            <img className='pfp' src={user?.photoURL || ""} width='20'height='20'/>
+            <div className='profile'> <p >{user?.displayName}</p>
+            <img className='pfp' src={user?.photoURL || ""} width='20'height='20'/></div>
+           
             <button className='logout' onClick={signuserOut}>Log Out</button>
             </>
         )}

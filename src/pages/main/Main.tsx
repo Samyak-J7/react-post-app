@@ -28,7 +28,7 @@ const Main = () => {
       console.log("error")
     }
     
-  })
+  },[])
   
   return (
     <div className='main'>
