@@ -24,12 +24,10 @@ const Main = () => {
   }
   useEffect(() => {
     try{getPosts();}
-    catch{
-      console.log("error")
-    }
+    catch{}
     
-  },[])
-  
+  },[user])
+
   return (
     <div className='main'>
          
