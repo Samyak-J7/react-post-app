@@ -62,8 +62,12 @@ body{
   justify-content: center;
   align-items: flex-start ;
   border: 1px solid rgb(78, 78, 78);
+  overflow-wrap:break-word ;
  
 }
+.post h2{
+  max-width: 100%;
+  }
 .bottom{
   display: flex;
   align-items: center;

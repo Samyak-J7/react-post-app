@@ -51,6 +51,7 @@ const Posts = (props: Props) => {
     const hasLiked = Likes?.find((like) =>like.userId === user?.uid);
     const isMyPost =  post.userId===user?.uid ?true: false;
      const delPost = async () => {
+        try{
         let delpostid:any =''
         const Posttodelquery = query(PostsRef,where("userId",'==',post.userId),where("userId",'==',user?.uid));
         const posttodeldata = await getDocs(Posttodelquery);
@@ -59,7 +60,8 @@ const Posts = (props: Props) => {
              delpostid = doc(db,"posts",datapost.id);    
            }
        })
-       await deleteDoc(delpostid); 
+       await deleteDoc(delpostid); }
+       catch{}
 
     }
     
@@ -69,7 +71,7 @@ const Posts = (props: Props) => {
     },[])
   return (
     <div className="post">
-        <h1>{post.title}</h1>
+        <h2>{post.title}</h2>
         <h4>@{post.username}</h4>
         <p>{post.description}</p>
         <div className="bottom">
