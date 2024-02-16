@@ -29,10 +29,11 @@ const Main = () => {
     }
     
   })
+  
   return (
     <div className='main'>
-
-        {user ? postsList?.map((post) =>( <Posts post={post} /> )):<><h1 className='msg'>Please Sign In using Google Account.</h1></>}
+         
+        {user ? postsList?.map((post) =>( <Posts post={post} /> )):<></>}
     </div>
   )
 }
